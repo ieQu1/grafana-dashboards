@@ -1,0 +1,25 @@
+#+TITLE: Grafana setup for realtime Erlang VM introspection
+
+* Grafana docker image
+
+The following environment variables _should_ be set:
+- =POSTGRES_PASS= -- password for grafana postgres user (see below)
+
+The following variables can be customized:
+
+- =POSTGRES_URL=
+- =POSTGRES_DB=
+- =POSTGRES_USER=
+- =POSTGRES_SSL_MODE=
+
+- =PROMETHEUS_URL=
+
+* Postgres docker image
+
+This docker image contains Postgres with the schema necessary to receive data from [[https://github.com/k32/system_monitor][system_monitor]].
+
+The following environment variables _should_ be set:
+
+- =POSTGRES_PASSWORD= -- password for the root user
+- =SYSMON_PASS= -- password used for the =system_monitor= user
+- =GRAFANA_PASS= -- initial password used for the read-only =grafana= user
