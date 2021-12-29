@@ -1,0 +1,24 @@
+# Note: this is just for local testing
+version: "3.4"
+services:
+  db_host:
+    network_mode: host
+    build: postgres
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASS}
+      - PGDATA=/tmp/postgres
+      - SYSMON_PASS=${POSTGRES_PASS_SYSMON}
+      - GRAFANA_PASS=${POSTGRES_PASS_GRAFANA}
+
+  prometheus:
+    network_mode: host
+    image: "prom/prometheus:latest"
+
+  grafana:
+    network_mode: host
+    build: grafana
+    depends_on:
+      - db_host
+      - prometheus
+    environment:
+      - POSTGRES_PASS=${POSTGRES_PASS_GRAFANA}

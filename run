@@ -1,0 +1,14 @@
+#!/bin/bash
+
+pwgen () {
+    openssl rand -base64 12
+}
+
+export POSTGRES_PASS=$(pwgen)
+export POSTGRES_PASS_GRAFANA=$(pwgen)
+[ -z ${POSTGRES_PASS_SYSMON+x} ] &&
+    export POSTGRES_PASS_SYSMON=$(pwgen)
+
+echo "Generated password for system monitor user is ${POSTGRES_PASS_SYSMON}"
+
+docker-compose $@
