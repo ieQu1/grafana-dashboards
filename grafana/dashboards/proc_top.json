@@ -8,28 +8,32 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 3,
-  "iteration": 1596220898345,
+  "iteration": 1640974810725,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${Prometheus}"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -53,8 +57,11 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "8.3.0",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -62,10 +69,21 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${Prometheus}"
+          },
+          "exemplar": true,
+          "expr": "emqx_vm_cpu_use{instance=\"emqx~${host}\"}",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Time series",
       "tooltip": {
         "shared": true,
@@ -74,44 +92,29 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
       "yaxes": [
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
       "columns": [],
       "datasource": "${Postgres}",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "fontSize": "180%",
       "gridPos": {
         "h": 7,
@@ -125,14 +128,12 @@
       "scroll": false,
       "showHeader": true,
       "sort": {
-        "col": null,
         "desc": false
       },
       "styles": [
         {
           "alias": "",
           "align": "auto",
-          "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
             "rgba(237, 129, 40, 0.89)",
@@ -176,19 +177,12 @@
           ]
         }
       ],
-      "title": "",
       "transform": "table",
       "type": "table-old"
     },
     {
       "columns": [],
       "datasource": "${Postgres}",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "fontSize": "100%",
       "gridPos": {
         "h": 24,
@@ -409,7 +403,7 @@
     }
   ],
   "refresh": "5s",
-  "schemaVersion": 34,
+  "schemaVersion": 33,
   "style": "dark",
   "tags": [
     "erlang",
@@ -418,25 +412,47 @@
   "templating": {
     "list": [
       {
-         "current": {
-           "selected": false,
-           "text": "default",
-           "value": "default"
-         },
-         "error": null,
-         "hide": 0,
-         "includeAll": false,
-         "label": "datasource",
-         "multi": false,
-         "name": "Postgres",
-         "options": [],
-         "query": "postgres",
-         "refresh": 1,
-         "regex": "",
-         "skipUrlSync": false,
-         "type": "datasource"
+        "current": {
+          "selected": false,
+          "text": "Postgres",
+          "value": "Postgres"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": "datasource",
+        "multi": false,
+        "name": "Postgres",
+        "options": [],
+        "query": "postgres",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
       },
       {
+        "current": {
+          "selected": false,
+          "text": "Prometheus",
+          "value": "Prometheus"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "Prometheus",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
+        },
         "datasource": "${Postgres}",
         "definition": "SELECT DISTINCT node FROM node ORDER BY node ASC;",
         "hide": 0,
@@ -455,7 +471,13 @@
         "useTags": false
       },
       {
-        "datasource":  "${Postgres}",
+        "current": {
+          "isNone": true,
+          "selected": false,
+          "text": "None",
+          "value": ""
+        },
+        "datasource": "${Postgres}",
         "definition": "SELECT DISTINCT node FROM node\nWHERE node LIKE '%${host}';",
         "hide": 0,
         "includeAll": false,
@@ -499,5 +521,6 @@
   "timezone": "",
   "title": "Erlang top",
   "uid": "V5HktsRik",
-  "version": 6
+  "version": 3,
+  "weekStart": ""
 }
