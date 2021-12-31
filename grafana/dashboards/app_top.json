@@ -24,7 +24,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Postgres",
+      "datasource": "${Postgres}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -115,7 +115,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Postgres",
+      "datasource": "${Postgres}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -204,7 +204,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Postgres",
+      "datasource": "${Postgres}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -299,7 +299,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Postgres",
+      "datasource": "${Postgres}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -388,7 +388,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Postgres",
+      "datasource": "${Postgres}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -483,13 +483,32 @@
   "templating": {
     "list": [
       {
+         "current": {
+           "selected": false,
+           "text": "default",
+           "value": "default"
+         },
+         "error": null,
+         "hide": 0,
+         "includeAll": false,
+         "label": "datasource",
+         "multi": false,
+         "name": "Postgres",
+         "options": [],
+         "query": "postgres",
+         "refresh": 1,
+         "regex": "",
+         "skipUrlSync": false,
+         "type": "datasource"
+      },
+      {
         "allValue": null,
         "current": {
           "tags": [],
           "text": "",
           "value": ""
         },
-        "datasource": "Postgres",
+        "datasource": "${Postgres}",
         "definition": "SELECT DISTINCT node FROM node ORDER BY node ASC;",
         "hide": 0,
         "includeAll": false,
