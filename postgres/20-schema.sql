@@ -34,7 +34,7 @@ create table app_top (
     ts timestamp without time zone not null,
     application text,
     red_abs bigint,
-    red_rel float,
+    red_rel real,
     memory bigint,
     num_processes integer
 ) partition by range(ts);
@@ -44,22 +44,30 @@ grant insert on table app_top to system_monitor;
 grant select on table app_top to grafana;
 
 -----------------------------------------------------------------------------------
--- fun_top table
+-- fun_top tables
 -----------------------------------------------------------------------------------
 
-create type fun_type as enum ('initial_call', 'current_function');
-
-create table fun_top (
+create table current_fun_top (
     node text,
     ts timestamp without time zone not null,
     fun text,
-    fun_type fun_type,
-    num_processes integer
+    percent_processes real
 ) partition by range(ts);
 
-alter table fun_top owner to system_monitor;
-grant insert on table fun_top to system_monitor;
-grant select on table fun_top to grafana;
+alter table current_fun_top owner to system_monitor;
+grant insert on table current_fun_top to system_monitor;
+grant select on table current_fun_top to grafana;
+
+create table initial_fun_top (
+    node text,
+    ts timestamp without time zone not null,
+    fun text,
+    percent_processes real
+) partition by range(ts);
+
+alter table initial_fun_top owner to system_monitor;
+grant insert on table initial_fun_top to system_monitor;
+grant select on table initial_fun_top to grafana;
 
 -----------------------------------------------------------------------------------
 -- node_status table
