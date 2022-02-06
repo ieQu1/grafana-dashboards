@@ -5,10 +5,10 @@ services:
     network_mode: host
     build: postgres
     environment:
-      - POSTGRES_PASSWORD=${POSTGRES_PASS}
+      - POSTGRES_PASSWORD=${POSTGRES_PASS-123}
       - PGDATA=/tmp/postgres
-      - SYSMON_PASS=${POSTGRES_PASS_SYSMON}
-      - GRAFANA_PASS=${POSTGRES_PASS_GRAFANA}
+      - SYSMON_PASS=${POSTGRES_PASS_SYSMON-123}
+      - GRAFANA_PASS=${POSTGRES_PASS_GRAFANA-123}
 
   prometheus:
     network_mode: host

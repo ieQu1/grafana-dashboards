@@ -29,14 +29,14 @@ grant select on table prc to grafana;
 -- app_top table
 -----------------------------------------------------------------------------------
 
-create type app_top_unit as enum ('reductions', 'memory', 'processes');
-
 create table app_top (
     node text,
     ts timestamp without time zone not null,
     application text,
-    unit app_top_unit,
-    value numeric
+    red_abs bigint,
+    red_rel float,
+    memory bigint,
+    num_processes integer
 ) partition by range(ts);
 
 alter table app_top owner to system_monitor;
@@ -54,7 +54,7 @@ create table fun_top (
     ts timestamp without time zone not null,
     fun text,
     fun_type fun_type,
-    num_processes numeric
+    num_processes integer
 ) partition by range(ts);
 
 alter table fun_top owner to system_monitor;
@@ -62,22 +62,22 @@ grant insert on table fun_top to system_monitor;
 grant select on table fun_top to grafana;
 
 -----------------------------------------------------------------------------------
--- node_role table
+-- node_status table
 -----------------------------------------------------------------------------------
 
-create table node_role (
+create table node_status (
     node text not null,
     ts timestamp without time zone not null,
     data text
 ) partition by range(ts);
 
-alter table node_role owner to system_monitor;
-grant delete on table node_role to system_monitor;
-grant select on table node_role to system_monitor;
-grant insert on table node_role to system_monitor;
-grant select on table node_role to grafana;
+alter table node_status owner to system_monitor;
+grant delete on table node_status to system_monitor;
+grant select on table node_status to system_monitor;
+grant insert on table node_status to system_monitor;
+grant select on table node_status to grafana;
 
-create index node_role_ts_idx on node_role(ts);
+create index node_status_ts_idx on node_status(ts);
 
 -----------------------------------------------------------------------------------
 -- node table
@@ -103,6 +103,6 @@ end;
 $$;
 
 create trigger update_nodes_trigger
-       after insert on node_role
+       after insert on node_status
        for each row
        execute procedure update_nodes();
