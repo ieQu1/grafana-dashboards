@@ -8,16 +8,24 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "editable": true,
+  "fiscalYearStartMonth": 0,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1,
-  "iteration": 1596192927850,
+  "id": 2,
+  "iteration": 1644193606675,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
       "aliasColors": {},
@@ -25,10 +33,16 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "${Postgres}",
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 9,
+        "h": 12,
         "w": 12,
         "x": 0,
         "y": 0
@@ -49,9 +63,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "8.2.6",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -65,15 +80,36 @@
         {
           "alias": "",
           "format": "time_series",
-          "rawSql": "WITH tp(tp) AS (VALUES(($__unixEpochTo()-$__unixEpochFrom())/100))\nSELECT\n  (extract(epoch from ts)/tp)::bigint*tp AS time,\n  application AS \"metric\",\n  log(avg(value))\nFROM\n  app_top, tp\nWHERE\n  unit = 'reductions' AND\n  node = '[[node]]' AND\n  ts BETWEEN $__timeFrom() AND $__timeTo()\nGROUP BY application,time\nORDER BY time",
-          "refId": "A"
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "WITH tp(tp) AS (VALUES(($__unixEpochTo()-$__unixEpochFrom())/100))\nSELECT\n  (extract(epoch from ts)/tp)::bigint*tp AS time,\n  application AS \"metric\",\n  log(avg(red_abs))\nFROM\n  app_top, tp\nWHERE\n  red_abs > 0 AND\n  node = '${node}' AND\n  ts BETWEEN $__timeFrom() AND $__timeTo()\nGROUP BY application,time\nORDER BY time",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "reductions per application (log scale)",
+      "title": "approx. reductions per application (log scale)",
       "tooltip": {
         "shared": false,
         "sort": 2,
@@ -89,6 +125,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:2907",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -97,6 +134,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:2908",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -116,10 +154,16 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "${Postgres}",
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 9,
+        "h": 12,
         "w": 12,
         "x": 12,
         "y": 0
@@ -140,9 +184,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "8.2.6",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -154,15 +199,36 @@
         {
           "alias": "",
           "format": "time_series",
-          "rawSql": "WITH tp(tp) AS (VALUES(($__unixEpochTo()-$__unixEpochFrom())/100))\nSELECT\n  (extract(epoch from ts)/tp)::bigint*tp AS time,\n  application AS \"metric\",\n  avg(value)\nFROM\n  app_top, tp\nWHERE\n  unit = 'memory' AND\n  node = '[[node]]' AND\n  ts BETWEEN $__timeFrom() AND $__timeTo()\nGROUP BY application,time\nORDER BY time",
-          "refId": "A"
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "WITH tp(tp) AS (VALUES(($__unixEpochTo()-$__unixEpochFrom())/100))\nSELECT\n  (extract(epoch from ts)/tp)::bigint*tp AS time,\n  application AS \"metric\",\n  avg(memory)\nFROM\n  app_top, tp\nWHERE\n  node = '${node}' AND\n  ts BETWEEN $__timeFrom() AND $__timeTo()\nGROUP BY application,time\nORDER BY time",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "memory per application",
+      "title": "approx. memory per application",
       "tooltip": {
         "shared": false,
         "sort": 2,
@@ -178,6 +244,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:2965",
           "format": "decbytes",
           "label": null,
           "logBase": 1,
@@ -186,6 +253,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:2966",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -205,13 +273,19 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "${Postgres}",
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 9,
+        "h": 10,
         "w": 8,
         "x": 0,
-        "y": 9
+        "y": 12
       },
       "hiddenSeries": false,
       "id": 9,
@@ -229,9 +303,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "8.2.6",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -243,8 +318,29 @@
         {
           "alias": "",
           "format": "time_series",
-          "rawSql": "WITH tp(tp) AS (VALUES(($__unixEpochTo()-$__unixEpochFrom())/100))\nSELECT\n  (extract(epoch from ts)/tp)::bigint*tp AS time,\n  application AS \"metric\",\n  avg(value)\nFROM\n  app_top, tp\nWHERE\n  unit = 'processes' AND\n  node = '[[node]]' AND\n  ts BETWEEN $__timeFrom() AND $__timeTo()\nGROUP BY application,time\nORDER BY time",
-          "refId": "A"
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "WITH tp(tp) AS (VALUES(($__unixEpochTo()-$__unixEpochFrom())/100))\nSELECT\n  (extract(epoch from ts)/tp)::bigint*tp AS time,\n  application AS \"metric\",\n  avg(num_processes)\nFROM\n  app_top, tp\nWHERE\n  node = '${node}' AND\n  ts BETWEEN $__timeFrom() AND $__timeTo()\nGROUP BY application,time\nORDER BY time",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -267,6 +363,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:3135",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -275,6 +372,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:3136",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -300,13 +398,19 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "${Postgres}",
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 9,
+        "h": 10,
         "w": 7,
         "x": 8,
-        "y": 9
+        "y": 12
       },
       "hiddenSeries": false,
       "id": 2,
@@ -324,9 +428,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": true,
+      "pluginVersion": "8.2.6",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -338,8 +443,29 @@
         {
           "alias": "",
           "format": "time_series",
-          "rawSql": "WITH tp(tp) AS (VALUES(($__unixEpochTo()-$__unixEpochFrom())/100))\nSELECT\n  (extract(epoch from ts)/tp)::bigint*tp AS time,\n  fun AS \"metric\",\n  avg(num_processes)\nFROM\n  fun_top, tp\nWHERE\n  fun_type = 'current_function' AND\n  node = '[[node]]' AND\n  ts BETWEEN $__timeFrom() AND $__timeTo()\nGROUP BY fun,time\nORDER BY time",
-          "refId": "A"
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "WITH tp(tp) AS (VALUES(($__unixEpochTo()-$__unixEpochFrom())/100))\nSELECT\n  (extract(epoch from ts)/tp)::bigint*tp AS time,\n  fun AS \"metric\",\n  avg(percent_processes)\nFROM\n  current_fun_top, tp\nWHERE\n  node = '${node}' AND\n  ts BETWEEN $__timeFrom() AND $__timeTo()\nGROUP BY fun,time\nORDER BY time",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -362,6 +488,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:3193",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -370,6 +497,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:3194",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -389,13 +517,19 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "${Postgres}",
+      "fieldConfig": {
+        "defaults": {
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 9,
+        "h": 10,
         "w": 9,
         "x": 15,
-        "y": 9
+        "y": 12
       },
       "hiddenSeries": false,
       "id": 4,
@@ -413,9 +547,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": true,
+      "pluginVersion": "8.2.6",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -427,8 +562,29 @@
         {
           "alias": "",
           "format": "time_series",
-          "rawSql": "WITH tp(tp) AS (VALUES(($__unixEpochTo()-$__unixEpochFrom())/100))\nSELECT\n  (extract(epoch from ts)/tp)::bigint*tp AS time,\n  fun AS \"metric\",\n  avg(num_processes)\nFROM\n  fun_top, tp\nWHERE\n  fun_type = 'initial_call' AND\n  node = '[[node]]' AND\n  ts BETWEEN $__timeFrom() AND $__timeTo()\nGROUP BY fun,time\nORDER BY time",
-          "refId": "A"
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "WITH tp(tp) AS (VALUES(($__unixEpochTo()-$__unixEpochFrom())/100))\nSELECT\n  (extract(epoch from ts)/tp)::bigint*tp AS time,\n  fun AS \"metric\",\n  avg(percent_processes)\nFROM\n  initial_fun_top, tp\nWHERE\n  node = '${node}' AND\n  ts BETWEEN $__timeFrom() AND $__timeTo()\nGROUP BY fun,time\nORDER BY time",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -451,6 +607,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:3251",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -459,6 +616,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:3252",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -473,8 +631,8 @@
       }
     }
   ],
-  "refresh": false,
-  "schemaVersion": 22,
+  "refresh": "5s",
+  "schemaVersion": 32,
   "style": "dark",
   "tags": [
     "erlang",
@@ -483,52 +641,48 @@
   "templating": {
     "list": [
       {
-         "current": {
-           "selected": false,
-           "text": "default",
-           "value": "default"
-         },
-         "error": null,
-         "hide": 0,
-         "includeAll": false,
-         "label": "datasource",
-         "multi": false,
-         "name": "Postgres",
-         "options": [],
-         "query": "postgres",
-         "refresh": 1,
-         "regex": "",
-         "skipUrlSync": false,
-         "type": "datasource"
+        "current": {
+          "selected": false,
+          "text": "Postgres",
+          "value": "Postgres"
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "datasource",
+        "multi": false,
+        "name": "Postgres",
+        "options": [],
+        "query": "postgres",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
       },
       {
         "allValue": null,
         "current": {
-          "tags": [],
-          "text": "",
-          "value": ""
+          "selected": false,
+          "text": "emqx@127.0.0.1",
+          "value": "emqx@127.0.0.1"
         },
         "datasource": "${Postgres}",
         "definition": "SELECT DISTINCT node FROM node ORDER BY node ASC;",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": null,
         "multi": false,
         "name": "node",
-        "options": [
-          {
-            "selected": true,
-            "text": "",
-            "value": ""
-          }
-        ],
+        "options": [],
         "query": "SELECT DISTINCT node FROM node ORDER BY node ASC;",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -567,5 +721,5 @@
   "timezone": "",
   "title": "Erlang applications top",
   "uid": "tw4QVxniz",
-  "version": 5
+  "version": 8
 }
