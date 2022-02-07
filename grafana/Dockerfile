@@ -1,4 +1,4 @@
-FROM grafana/grafana:latest
+FROM grafana/grafana:8.2.6
 
 COPY datasources.yml   /etc/grafana/provisioning/datasources/
 COPY dashboards/*.yml  /etc/grafana/provisioning/dashboards/
@@ -8,5 +8,6 @@ ENV POSTGRES_URL="localhost:5432"
 ENV POSTGRES_DB="postgres"
 ENV POSTGRES_USER="grafana"
 ENV POSTGRES_SSL_MODE="disable"
+ENV GF_DASHBOARDS_MIN_REFRESH_INTERVAL="1s"
 
 ENV PROMETHEUS_URL="http://localhost:9090"

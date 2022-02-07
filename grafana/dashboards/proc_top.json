@@ -155,7 +155,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT data as status \n FROM node_role WHERE node='[[node]]'\n  AND ts=(SELECT max(ts) FROM node_role WHERE node='[[node]]' AND ts > $__timeFrom());",
+          "rawSql": "SELECT data as status \n FROM node_status WHERE node='[[node]]'\n  AND ts=(SELECT max(ts) FROM node_status WHERE node='[[node]]' AND ts > $__timeFrom());",
           "refId": "A",
           "select": [
             [
@@ -346,6 +346,10 @@
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "decimals": 2,
           "pattern": "registered_name",
+          "link": true,
+          "linkTargetBlank": true,
+          "linkTooltip": "history",
+          "linkUrl": "/d/P2OSAsRmz/process-history?orgId=1&var-node=[[node]]&var-pid=&var-regname=${__cell:raw}&from=$__from&to=$__to",
           "thresholds": [],
           "type": "number",
           "unit": "short"
@@ -372,7 +376,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT pid, registered_name, reductions, dreductions, message_queue_len, memory, dmemory, stack_size, heap_size, total_heap_size, initial_call, current_function\nFROM prc\nWHERE node='[[node]]'\nAND ts=(SELECT max(ts) FROM node_role WHERE node='[[node]]' AND ts > $__timeFrom() AND ts < $__timeTo());",
+          "rawSql": "SELECT pid, registered_name, reductions, dreductions, message_queue_len, memory, dmemory, stack_size, heap_size, total_heap_size, initial_call, current_function\nFROM prc\nWHERE node='[[node]]'\nAND ts=(SELECT max(ts) FROM node_status WHERE node='[[node]]' AND ts > $__timeFrom() AND ts < $__timeTo());",
           "refId": "A",
           "select": [
             [
@@ -402,7 +406,7 @@
       "type": "table-old"
     }
   ],
-  "refresh": "5s",
+  "refresh": "2s",
   "schemaVersion": 33,
   "style": "dark",
   "tags": [
