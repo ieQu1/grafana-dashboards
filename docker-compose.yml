@@ -9,6 +9,7 @@ services:
       - PGDATA=/tmp/postgres
       - SYSMON_PASS=${POSTGRES_PASS_SYSMON:-system_monitor_password}
       - GRAFANA_PASS=${POSTGRES_PASS_GRAFANA:-123}
+      - GF_AUTH_ANONYMOUS_ENABLED=true
     volumes: []
 
   prometheus:
