@@ -367,7 +367,7 @@
         {
           "alias": "",
           "format": "table",
-          "rawSql": "SELECT DISTINCT ts, current_function, current_stacktrace FROM prc \nWHERE (ts BETWEEN $__timeFrom() AND $__timeTo()) AND node='[[node]]' AND (pid='[[pid]]' OR registered_name='[[regname]]') AND current_function NOT SIMILAR TO 'gen_server:loop/%'\n",
+          "rawSql": "SELECT DISTINCT ts, current_function, current_stacktrace FROM prc \nWHERE (ts BETWEEN $__timeFrom() AND $__timeTo()) AND node='[[node]]' AND (pid='[[pid]]' OR registered_name='[[regname]]') AND current_function NOT SIMILAR TO 'gen_server:loop/%'\nAND current_function NOT SIMILAR TO 'gen_statem:loop_receive/%'\n",
           "refId": "A"
         }
       ],
