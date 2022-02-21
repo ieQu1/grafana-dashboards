@@ -16,7 +16,7 @@ The following variables can be customized:
 
 * Postgres docker image
 
-This docker image contains Postgres with the schema necessary to receive data from [[https://github.com/k32/system_monitor][system_monitor]].
+This docker image contains Postgres with the schema necessary to receive data from [[https://github.com/ieQu1/system_monitor][system_monitor]].
 
 The following environment variables _should_ be set:
 
