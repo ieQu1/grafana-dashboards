@@ -102,7 +102,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "group_n_workers{}",
+          "expr": "emqttb_group_n_workers{}",
           "interval": "",
           "legendFormat": "{{group}}",
           "refId": "A"
@@ -184,7 +184,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(group_n_workers{}[5s])",
+          "expr": "rate(emqttb_group_n_workers{}[5s])",
           "interval": "",
           "legendFormat": "{{group}}",
           "refId": "A"
@@ -430,7 +430,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "group_n_pending",
+          "expr": "emqttb_group_n_pending",
           "interval": "",
           "legendFormat": "{{group}}/{{operation}}",
           "refId": "A"
@@ -513,7 +513,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "group_op_time",
+          "expr": "emqttb_group_op_time",
           "interval": "",
           "legendFormat": "{{group}}/{{operation}}",
           "refId": "A"
@@ -596,7 +596,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "autorate_rate",
+          "expr": "emqttb_autorate_rate",
           "interval": "",
           "legendFormat": "{{id}}",
           "refId": "A"
@@ -679,7 +679,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "autorate_control",
+          "expr": "emqttb_autorate_control",
           "interval": "",
           "legendFormat": "{{id}}/{{term}}",
           "refId": "A"
@@ -822,5 +822,5 @@
   "timezone": "",
   "title": "emqttb",
   "uid": "6ALcrDC7k",
-  "version": 2
+  "version": 8
 }
