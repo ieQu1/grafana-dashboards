@@ -6,7 +6,7 @@ pwgen () {
 
 [ -f .pass ] || {
     cat <<EOF > .pass
-export POSTGRES_PASS=$(pwgen)
+export POSTGRES_PASSWORD=$(pwgen)
 export POSTGRES_PASS_GRAFANA=$(pwgen)
 export POSTGRES_PASS_SYSMON=$(pwgen)
 EOF

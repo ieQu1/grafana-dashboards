@@ -1,3 +1,5 @@
+\c system_monitor
+
 -----------------------------------------------------------------------------------
 -- prc table
 -----------------------------------------------------------------------------------
@@ -22,7 +24,7 @@ create table prc (
 ) partition by range(ts);
 
 alter table prc owner to system_monitor;
-grant insert on table prc to system_monitor;
+grant all on table prc to system_monitor;
 grant select on table prc to grafana;
 
 -----------------------------------------------------------------------------------
@@ -40,7 +42,7 @@ create table app_top (
 ) partition by range(ts);
 
 alter table app_top owner to system_monitor;
-grant insert on table app_top to system_monitor;
+grant all on table app_top to system_monitor;
 grant select on table app_top to grafana;
 
 -----------------------------------------------------------------------------------
@@ -66,7 +68,7 @@ create table initial_fun_top (
 ) partition by range(ts);
 
 alter table initial_fun_top owner to system_monitor;
-grant insert on table initial_fun_top to system_monitor;
+grant all on table initial_fun_top to system_monitor;
 grant select on table initial_fun_top to grafana;
 
 -----------------------------------------------------------------------------------
@@ -80,9 +82,7 @@ create table node_status (
 ) partition by range(ts);
 
 alter table node_status owner to system_monitor;
-grant delete on table node_status to system_monitor;
-grant select on table node_status to system_monitor;
-grant insert on table node_status to system_monitor;
+grant all on table node_status to system_monitor;
 grant select on table node_status to grafana;
 
 create index node_status_ts_idx on node_status(ts);
@@ -96,8 +96,7 @@ create table node (
 );
 
 alter table node owner to system_monitor;
-grant select on table node to system_monitor;
-grant insert on table node to system_monitor;
+grant all on table node to system_monitor;
 grant select on table node to grafana;
 
 create or replace function update_nodes()
