@@ -4,10 +4,10 @@ datasources:
   - name: Postgres
     type: postgres
     url: "$POSTGRES_URL"
-    database: "$POSTGRES_DB"
-    user: "$POSTGRES_USER"
+    database: "system_monitor"
+    user: "grafana"
     secureJsonData:
-      password: "$POSTGRES_PASS"
+      password: "$POSTGRES_PASS_GRAFANA"
     jsonData:
       sslmode: "$POSTGRES_SSL_MODE"
       timescaledb: false

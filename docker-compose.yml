@@ -1,26 +1,56 @@
 # Note: this is just for local testing
 version: "3.4"
+
+networks:
+  grafana-dashboards:
+
 services:
   db_host:
-    network_mode: host
     build: postgres
     environment:
-      - POSTGRES_PASSWORD=${POSTGRES_PASS:-123}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - PGDATA=/tmp/postgres
-      - SYSMON_PASS=${POSTGRES_PASS_SYSMON:-system_monitor_password}
-      - GRAFANA_PASS=${POSTGRES_PASS_GRAFANA:-123}
-      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - POSTGRES_PASS_SYSMON=${POSTGRES_PASS_SYSMON}
+      - POSTGRES_PASS_GRAFANA=${POSTGRES_PASS_GRAFANA}
     volumes: []
+    ports:
+      - 5432:5432
+    networks:
+      - grafana-dashboards
+
+  pushgateway:
+    image: "prom/pushgateway:v1.11.1"
+    networks:
+      - grafana-dashboards
+    ports:
+    - 9091:9091
+    logging:
+      driver: "none"
 
   prometheus:
-    network_mode: host
-    image: "prom/prometheus:latest"
+    image: "prom/prometheus:v3.3.0"
+    networks:
+      - grafana-dashboards
+    volumes:
+      - .prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - pushgateway
+    ports:
+    - 9090:9090
+    logging:
+      driver: "none"
 
   grafana:
-    network_mode: host
     build: grafana
+    networks:
+      - grafana-dashboards
     depends_on:
       - db_host
       - prometheus
     environment:
-      - POSTGRES_PASS=${POSTGRES_PASS_GRAFANA:-123}
+      - POSTGRES_PASS_GRAFANA=${POSTGRES_PASS_GRAFANA}
+      - POSTGRES_URL=db_host
+      - PROMETHEUS_URL=http://prometheus:9090
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+    ports:
+      - 3000:3000
