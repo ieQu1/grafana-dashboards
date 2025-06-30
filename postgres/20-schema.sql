@@ -35,10 +35,10 @@ create table app_top (
     node text,
     ts timestamp without time zone not null,
     application text,
-    red_abs bigint,
+    red_abs real,
     red_rel real,
-    memory bigint,
-    num_processes integer
+    memory real,
+    num_processes real
 ) partition by range(ts);
 
 alter table app_top owner to system_monitor;
