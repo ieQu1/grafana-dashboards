@@ -110,7 +110,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "emqx_connections_count{instance=\"$host\"}",
+          "expr": "emqx_connections_count{instance=~\"$host\"}",
           "format": "time_series",
           "interval": "1m",
           "intervalFactor": 1,
@@ -120,7 +120,7 @@
         },
         {
           "exemplar": true,
-          "expr": "emqx_connections_max{instance=\"$host\"}",
+          "expr": "emqx_connections_max{instance=~\"$host\"}",
           "hide": false,
           "interval": "1m",
           "legendFormat": "Max",
@@ -212,14 +212,14 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "emqx_sessions_count{instance=\"$host\"}",
+          "expr": "emqx_sessions_count{instance=~\"$host\"}",
           "interval": "",
           "legendFormat": "Current",
           "refId": "A"
         },
         {
           "exemplar": true,
-          "expr": "emqx_sessions_max{instance=\"$host\"}",
+          "expr": "emqx_sessions_max{instance=~\"$host\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Max",
@@ -310,14 +310,14 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "emqx_suboptions_count{instance=\"$host\"}",
+          "expr": "emqx_suboptions_count{instance=~\"$host\"}",
           "interval": "",
           "legendFormat": "Subopt-Current",
           "refId": "A"
         },
         {
           "exemplar": true,
-          "expr": "emqx_suboptions_max{instance=\"$host\"}",
+          "expr": "emqx_suboptions_max{instance=~\"$host\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Subopt-Max",
@@ -325,7 +325,7 @@
         },
         {
           "exemplar": true,
-          "expr": "emqx_subscribers_count{instance=\"$host\"}",
+          "expr": "emqx_subscribers_count{instance=~\"$host\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Suber-Current",
@@ -333,7 +333,7 @@
         },
         {
           "exemplar": true,
-          "expr": "emqx_subscribers_max{instance=\"$host\"}",
+          "expr": "emqx_subscribers_max{instance=~\"$host\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Suber-Max",
@@ -431,7 +431,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "emqx_subscriptions_count{instance=\"$host\"}",
+          "expr": "emqx_subscriptions_count{instance=~\"$host\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -441,7 +441,7 @@
         },
         {
           "exemplar": true,
-          "expr": "emqx_subscriptions_max{instance=\"$host\"}",
+          "expr": "emqx_subscriptions_max{instance=~\"$host\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Normal-Max",
@@ -449,7 +449,7 @@
         },
         {
           "exemplar": true,
-          "expr": "emqx_subscriptions_shared_count{instance=\"$host\"}",
+          "expr": "emqx_subscriptions_shared_count{instance=~\"$host\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Shared-Current",
@@ -457,7 +457,7 @@
         },
         {
           "exemplar": true,
-          "expr": "emqx_subscriptions_shared_max{instance=\"$host\"}",
+          "expr": "emqx_subscriptions_shared_max{instance=~\"$host\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Shared-Max",
@@ -556,7 +556,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "emqx_routes_count{instance=\"$host\"}",
+          "expr": "emqx_routes_count{instance=~\"$host\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -565,7 +565,7 @@
         },
         {
           "exemplar": true,
-          "expr": "emqx_routes_max{instance=\"$host\"}",
+          "expr": "emqx_routes_max{instance=~\"$host\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Max",
@@ -657,14 +657,14 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "emqx_retained_count{instance=\"$host\"}",
+          "expr": "emqx_retained_count{instance=~\"$host\"}",
           "interval": "",
           "legendFormat": "Current",
           "refId": "A"
         },
         {
           "exemplar": true,
-          "expr": "emqx_retained_max{instance=\"$host\"}",
+          "expr": "emqx_retained_max{instance=~\"$host\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "Max",
@@ -763,7 +763,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_messages_received{instance=\"$host\"}[$__interval]) or irate(emqx_messages_received{instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_messages_received{instance=~\"$host\"}[$__interval]) or irate(emqx_messages_received{instance=~\"$host\"}[$__interval]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 2,
@@ -772,7 +772,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_messages_sent{instance=\"$host\"}[$__interval]) or irate(emqx_messages_sent{instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_messages_sent{instance=~\"$host\"}[$__interval]) or irate(emqx_messages_sent{instance=~\"$host\"}[$__interval]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 2,
@@ -781,7 +781,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_messages_retained{instance=\"$host\"}[$__interval]) or irate(emqx_messages_retained{instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_messages_retained{instance=~\"$host\"}[$__interval]) or irate(emqx_messages_retained{instance=~\"$host\"}[$__interval]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 2,
@@ -790,7 +790,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_messages_dropped{instance=\"$host\"}[$__interval]) or irate(emqx_messages_dropped{instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_messages_dropped{instance=~\"$host\"}[$__interval]) or irate(emqx_messages_dropped{instance=~\"$host\"}[$__interval]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 2,
@@ -799,7 +799,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_messages_delayed{instance=\"$host\"}[$__interval]) or irate(emqx_messages_delayed{instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_messages_delayed{instance=~\"$host\"}[$__interval]) or irate(emqx_messages_delayed{instance=~\"$host\"}[$__interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "Delayed",
@@ -807,7 +807,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_messages_forward{instance=\"$host\"}[$__interval]) or irate(emqx_messages_forward{instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_messages_forward{instance=~\"$host\"}[$__interval]) or irate(emqx_messages_forward{instance=~\"$host\"}[$__interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "Forward",
@@ -907,7 +907,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_messages_dropped{instance=\"$host\"}[$__interval]) or irate(emqx_messages_dropped{instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_messages_dropped{instance=~\"$host\"}[$__interval]) or irate(emqx_messages_dropped{instance=~\"$host\"}[$__interval]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 2,
@@ -916,7 +916,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_messages_dropped_expired {instance=\"$host\"}[$__interval]) or irate(emqx_messages_dropped_expired {instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_messages_dropped_expired {instance=~\"$host\"}[$__interval]) or irate(emqx_messages_dropped_expired {instance=~\"$host\"}[$__interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "Message.Dropped.Expired",
@@ -924,7 +924,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_messages_dropped_no_subscribers {instance=\"$host\"}[$__interval]) or irate(emqx_messages_dropped_no_subscribers {instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_messages_dropped_no_subscribers {instance=~\"$host\"}[$__interval]) or irate(emqx_messages_dropped_no_subscribers {instance=~\"$host\"}[$__interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "Message.Dropped.no_subscribers",
@@ -932,7 +932,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_delivery_dropped {instance=\"$host\"}[$__interval]) or irate(emqx_delivery_dropped {instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_delivery_dropped {instance=~\"$host\"}[$__interval]) or irate(emqx_delivery_dropped {instance=~\"$host\"}[$__interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "Delivery.Dropped",
@@ -940,7 +940,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_delivery_dropped_no_local{instance=\"$host\"}[$__interval]) or irate(emqx_delivery_dropped_no_local {instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_delivery_dropped_no_local{instance=~\"$host\"}[$__interval]) or irate(emqx_delivery_dropped_no_local {instance=~\"$host\"}[$__interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "Delivery.Dropped.no_local",
@@ -948,7 +948,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_delivery_dropped_too_large {instance=\"$host\"}[$__interval]) or irate(emqx_delivery_dropped_too_large {instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_delivery_dropped_too_large {instance=~\"$host\"}[$__interval]) or irate(emqx_delivery_dropped_too_large {instance=~\"$host\"}[$__interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "Delivery.Dropped.too_large",
@@ -956,7 +956,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_delivery_dropped_qos0_msg {instance=\"$host\"}[$__interval]) or irate(emqx_delivery_dropped_qos0_msg {instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_delivery_dropped_qos0_msg {instance=~\"$host\"}[$__interval]) or irate(emqx_delivery_dropped_qos0_msg {instance=~\"$host\"}[$__interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "Delivery.Dropped.qos0_msg",
@@ -964,7 +964,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_delivery_dropped_queue_full {instance=\"$host\"}[$__interval]) or irate(emqx_delivery_dropped_queue_full {instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_delivery_dropped_queue_full {instance=~\"$host\"}[$__interval]) or irate(emqx_delivery_dropped_queue_full {instance=~\"$host\"}[$__interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "Delivery.Dropped.queue_full",
@@ -972,7 +972,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_delivery_dropped_expired {instance=\"$host\"}[$__interval]) or irate(emqx_delivery_dropped_expired {instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_delivery_dropped_expired {instance=~\"$host\"}[$__interval]) or irate(emqx_delivery_dropped_expired {instance=~\"$host\"}[$__interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "Delivery.Dropped.expired",
@@ -1072,7 +1072,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_messages_received{instance=\"$host\"}[$__interval]) or irate(emqx_messages_received{instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_messages_received{instance=~\"$host\"}[$__interval]) or irate(emqx_messages_received{instance=~\"$host\"}[$__interval]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 2,
@@ -1081,7 +1081,7 @@
         },
         {
           "exemplar": false,
-          "expr": "sum(rate(emqx_messages_qos0_received {instance=\"$host\"}[$__interval]) or irate(emqx_messages_qos0_received {instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_messages_qos0_received {instance=~\"$host\"}[$__interval]) or irate(emqx_messages_qos0_received {instance=~\"$host\"}[$__interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "Received.QoS0",
@@ -1089,7 +1089,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_messages_qos1_received {instance=\"$host\"}[$__interval]) or irate(emqx_messages_qos1_received {instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_messages_qos1_received {instance=~\"$host\"}[$__interval]) or irate(emqx_messages_qos1_received {instance=~\"$host\"}[$__interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "Received.QoS1",
@@ -1097,7 +1097,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_messages_qos2_received {instance=\"$host\"}[$__interval]) or irate(emqx_messages_qos2_received {instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_messages_qos2_received {instance=~\"$host\"}[$__interval]) or irate(emqx_messages_qos2_received {instance=~\"$host\"}[$__interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "Received.QoS2",
@@ -1196,7 +1196,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(emqx_messages_sent{instance=\"$host\"}[$__interval]) or irate(emqx_messages_sent{instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_messages_sent{instance=~\"$host\"}[$__interval]) or irate(emqx_messages_sent{instance=~\"$host\"}[$__interval]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 2,
@@ -1205,7 +1205,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_messages_qos0_sent {instance=\"$host\"}[$__interval]) or irate(emqx_messages_qos0_sent {instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_messages_qos0_sent {instance=~\"$host\"}[$__interval]) or irate(emqx_messages_qos0_sent {instance=~\"$host\"}[$__interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "Sent.QoS0",
@@ -1213,7 +1213,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_messages_qos1_sent {instance=\"$host\"}[$__interval]) or irate(emqx_messages_qos1_sent {instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_messages_qos1_sent {instance=~\"$host\"}[$__interval]) or irate(emqx_messages_qos1_sent {instance=~\"$host\"}[$__interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "Sent.QoS1",
@@ -1221,7 +1221,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(emqx_messages_qos2_sent {instance=\"$host\"}[$__interval]) or irate(emqx_messages_qos2_sent {instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_messages_qos2_sent {instance=~\"$host\"}[$__interval]) or irate(emqx_messages_qos2_sent {instance=~\"$host\"}[$__interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "Sent.QoS2",
@@ -1320,7 +1320,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(emqx_bytes_received{instance=\"$host\"}[$__interval]) or irate(emqx_bytes_received{instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_bytes_received{instance=~\"$host\"}[$__interval]) or irate(emqx_bytes_received{instance=~\"$host\"}[$__interval]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1329,7 +1329,7 @@
           "step": 60
         },
         {
-          "expr": "sum(rate(emqx_bytes_sent{instance=\"$host\"}[$__interval]) or irate(emqx_bytes_sent{instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_bytes_sent{instance=~\"$host\"}[$__interval]) or irate(emqx_bytes_sent{instance=~\"$host\"}[$__interval]))",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1435,7 +1435,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_connect{instance=\"$host\"}[$__interval])",
+          "expr": "rate(emqx_packets_connect{instance=~\"$host\"}[$__interval])",
           "format": "time_series",
           "hide": false,
           "interval": "$interval",
@@ -1446,7 +1446,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_connack_sent{instance=\"$host\"}[$__interval])",
+          "expr": "rate(emqx_packets_connack_sent{instance=~\"$host\"}[$__interval])",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1456,7 +1456,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_disconnect_sent{instance=\"$host\"}[$__interval])",
+          "expr": "rate(emqx_packets_disconnect_sent{instance=~\"$host\"}[$__interval])",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1466,7 +1466,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_connack_error {instance=\"$host\"}[$__interval])",
+          "expr": "rate(emqx_packets_connack_error {instance=~\"$host\"}[$__interval])",
           "hide": false,
           "interval": "",
           "legendFormat": "connack_error",
@@ -1474,7 +1474,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_connack_auth_error {instance=\"$host\"}[$__interval])",
+          "expr": "rate(emqx_packets_connack_auth_error {instance=~\"$host\"}[$__interval])",
           "hide": false,
           "interval": "",
           "intervalFactor": 1,
@@ -1483,7 +1483,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_auth_received {instance=\"$host\"}[$__interval])",
+          "expr": "rate(emqx_packets_auth_received {instance=~\"$host\"}[$__interval])",
           "hide": false,
           "interval": "",
           "legendFormat": "Auth",
@@ -1491,7 +1491,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_auth_sent {instance=\"$host\"}[$__interval])",
+          "expr": "rate(emqx_packets_auth_sent {instance=~\"$host\"}[$__interval])",
           "hide": false,
           "interval": "",
           "legendFormat": "Auth sent",
@@ -1596,7 +1596,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_subscribe_received{instance=\"$host\"}[$__interval])",
+          "expr": "rate(emqx_packets_subscribe_received{instance=~\"$host\"}[$__interval])",
           "format": "time_series",
           "instant": false,
           "interval": "$interval",
@@ -1608,7 +1608,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_suback_sent{instance=\"$host\"}[$__interval])",
+          "expr": "rate(emqx_packets_suback_sent{instance=~\"$host\"}[$__interval])",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 2,
@@ -1618,7 +1618,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_unsubscribe_received{instance=\"$host\"}[$__interval])",
+          "expr": "rate(emqx_packets_unsubscribe_received{instance=~\"$host\"}[$__interval])",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 2,
@@ -1628,7 +1628,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_unsuback_sent{instance=\"$host\"}[$__interval])",
+          "expr": "rate(emqx_packets_unsuback_sent{instance=~\"$host\"}[$__interval])",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 2,
@@ -1638,7 +1638,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_subscribe_auth_error {instance=\"$host\"}[$__interval])",
+          "expr": "rate(emqx_packets_subscribe_auth_error {instance=~\"$host\"}[$__interval])",
           "hide": false,
           "interval": "",
           "legendFormat": "sub_auth_error",
@@ -1646,7 +1646,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_subscribe_error {instance=\"$host\"}[$__interval])",
+          "expr": "rate(emqx_packets_subscribe_error {instance=~\"$host\"}[$__interval])",
           "hide": false,
           "interval": "",
           "legendFormat": "sub_error",
@@ -1654,7 +1654,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_unsubscribe_error {instance=\"$host\"}[$__interval])",
+          "expr": "rate(emqx_packets_unsubscribe_error {instance=~\"$host\"}[$__interval])",
           "hide": false,
           "interval": "",
           "legendFormat": "unsub_error",
@@ -1753,7 +1753,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(emqx_packets_pingreq_received{instance=\"$host\"}[$__interval]) or irate(emqx_packets_pingreq_received{instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_packets_pingreq_received{instance=~\"$host\"}[$__interval]) or irate(emqx_packets_pingreq_received{instance=~\"$host\"}[$__interval]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1762,7 +1762,7 @@
           "step": 60
         },
         {
-          "expr": "sum(rate(emqx_packets_pingresp_sent{instance=\"$host\"}[$__interval]) or irate(emqx_packets_pingresp_sent{instance=\"$host\"}[$__interval]))",
+          "expr": "sum(rate(emqx_packets_pingresp_sent{instance=~\"$host\"}[$__interval]) or irate(emqx_packets_pingresp_sent{instance=~\"$host\"}[$__interval]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1867,7 +1867,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_publish_received{instance=\"$host\"}[$__interval])",
+          "expr": "rate(emqx_packets_publish_received{instance=~\"$host\"}[$__interval])",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1877,7 +1877,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_publish_sent{instance=\"$host\"}[$__interval])",
+          "expr": "rate(emqx_packets_publish_sent{instance=~\"$host\"}[$__interval])",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1887,7 +1887,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_puback_received{instance=\"$host\"}[$__interval])",
+          "expr": "rate(emqx_packets_puback_received{instance=~\"$host\"}[$__interval])",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
@@ -1898,7 +1898,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_puback_sent{instance=\"$host\"}[$__interval])",
+          "expr": "rate(emqx_packets_puback_sent{instance=~\"$host\"}[$__interval])",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 2,
@@ -1908,7 +1908,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_pubrel_received{instance=\"$host\"}[$interval])",
+          "expr": "rate(emqx_packets_pubrel_received{instance=~\"$host\"}[$interval])",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 2,
@@ -1918,7 +1918,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_pubrel_sent{instance=\"$host\"}[$interval])",
+          "expr": "rate(emqx_packets_pubrel_sent{instance=~\"$host\"}[$interval])",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 2,
@@ -1928,7 +1928,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_pubcomp_received{instance=\"$host\"}[$interval])",
+          "expr": "rate(emqx_packets_pubcomp_received{instance=~\"$host\"}[$interval])",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 2,
@@ -1938,7 +1938,7 @@
         },
         {
           "exemplar": true,
-          "expr": "rate(emqx_packets_pubcomp_sent{instance=\"$host\"}[$interval])",
+          "expr": "rate(emqx_packets_pubcomp_sent{instance=~\"$host\"}[$interval])",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 2,
@@ -2086,7 +2086,7 @@
         "hide": 0,
         "includeAll": false,
         "label": "Host",
-        "multi": false,
+        "multi": true,
         "name": "host",
         "options": [],
         "query": {
