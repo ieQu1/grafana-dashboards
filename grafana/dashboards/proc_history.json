@@ -108,7 +108,7 @@
             "uid": "${Postgres}"
           },
           "format": "time_series",
-          "rawSql": "SELECT\n  $__time(ts),\n  dreductions\nFROM\n  prc\nWHERE\n  (ts BETWEEN $__timeFrom() AND $__timeTo()) AND node='[[node]]' AND (pid='[[pid]]' OR registered_name='[[regname]]')\nORDER BY ts\n",
+          "rawSql": "SELECT\n  $__time(ts),\n  dreductions\nFROM\n  prc\nWHERE\n  (ts BETWEEN $__timeFrom() AND $__timeTo()) AND node='[[node]]' AND (('[[pid]]' <> '' AND pid='[[pid]]') OR ('[[regname]]' <> '' AND registered_name='[[regname]]'))\nORDER BY ts\n",
           "refId": "A"
         }
       ],
@@ -296,7 +296,7 @@
             "uid": "${Postgres}"
           },
           "format": "time_series",
-          "rawSql": "SELECT\n  $__time(ts), message_queue_len\nFROM prc\nWHERE  (ts BETWEEN $__timeFrom() AND $__timeTo()) AND node='[[node]]' AND (pid='[[pid]]' OR registered_name='[[regname]]')\nORDER BY ts",
+          "rawSql": "SELECT\n  $__time(ts), message_queue_len\nFROM prc\nWHERE  (ts BETWEEN $__timeFrom() AND $__timeTo()) AND node='[[node]]' AND (('[[pid]]' <> '' AND pid='[[pid]]') OR ('[[regname]]' <> '' AND registered_name='[[regname]]'))\nORDER BY ts",
           "refId": "A"
         }
       ],
@@ -434,7 +434,7 @@
             "uid": "${Postgres}"
           },
           "format": "table",
-          "rawSql": "SELECT DISTINCT ts, current_function, current_stacktrace FROM prc \nWHERE (ts BETWEEN $__timeFrom() AND $__timeTo()) AND node='[[node]]' AND (pid='[[pid]]' OR registered_name='[[regname]]') AND current_function NOT SIMILAR TO 'gen_server:loop/%'\nAND current_function NOT SIMILAR TO 'gen_statem:loop_receive/%'\n",
+          "rawSql": "SELECT DISTINCT ts, current_function, current_stacktrace FROM prc \nWHERE (ts BETWEEN $__timeFrom() AND $__timeTo())\n AND node='[[node]]' AND (('[[pid]]' <> '' AND pid='[[pid]]') OR ('[[regname]]' <> '' AND registered_name='[[regname]]'))\n AND current_function NOT SIMILAR TO 'gen_server:loop/%'\nAND current_function NOT SIMILAR TO 'gen_statem:loop_receive/%'\n",
           "refId": "A"
         }
       ],
