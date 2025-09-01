@@ -24,34 +24,21 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 3,
+  "id": 6,
   "links": [],
   "liveNow": false,
   "panels": [
     {
-      "collapsed": true,
-      "datasource": {
-        "type": "grafana-postgresql-datasource",
-        "uid": "P44368ADAD746BC27"
-      },
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
         "y": 0
       },
-      "id": 10,
+      "id": 23,
       "panels": [],
-      "targets": [
-        {
-          "datasource": {
-            "type": "grafana-postgresql-datasource",
-            "uid": "P44368ADAD746BC27"
-          },
-          "refId": "A"
-        }
-      ],
-      "title": "Replay",
+      "title": "Subscriptions",
       "type": "row"
     },
     {
@@ -86,7 +73,7 @@
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "never",
+            "showPoints": "auto",
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -109,8 +96,7 @@
                 "value": 80
               }
             ]
-          },
-          "unit": "µs"
+          }
         },
         "overrides": []
       },
@@ -120,7 +106,7 @@
         "x": 0,
         "y": 1
       },
-      "id": 12,
+      "id": 25,
       "options": {
         "legend": {
           "calcs": [],
@@ -139,14 +125,19 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "exemplar": true,
-          "expr": "emqx_ds_builtin_next_time{}",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "emqx_ds_subs{db=\"$db\", type=\"catchup\"}",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "{{instance}}/{{db}}/{{shard}}",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
         }
       ],
-      "title": "next time",
+      "title": "Catch-up subscriptions",
       "type": "timeseries"
     },
     {
@@ -181,7 +172,7 @@
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "never",
+            "showPoints": "auto",
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -214,7 +205,7 @@
         "x": 12,
         "y": 1
       },
-      "id": 14,
+      "id": 26,
       "options": {
         "legend": {
           "calcs": [],
@@ -233,26 +224,19 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "exemplar": true,
-          "expr": "rate(emqx_ds_storage_bitfield_lts_counter_next{}[$__rate_interval])",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "exemplar": true,
-          "expr": "rate(emqx_ds_storage_bitfield_lts_counter_seek{}[$__rate_interval])",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "B"
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "emqx_ds_subs{db=\"$db\", type=\"rt\"}",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "{{instance}}/{{db}}/{{shard}}",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
         }
       ],
-      "title": "LTS iteration metrics",
+      "title": "Realtime subscriptions",
       "type": "timeseries"
     },
     {
@@ -278,7 +262,7 @@
           "refId": "A"
         }
       ],
-      "title": "Egress",
+      "title": "Writes",
       "type": "row"
     },
     {
@@ -342,8 +326,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 11,
-        "w": 24,
+        "h": 10,
+        "w": 12,
         "x": 0,
         "y": 10
       },
@@ -366,16 +350,121 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "editorMode": "code",
+          "disableTextWrap": false,
+          "editorMode": "builder",
           "exemplar": true,
-          "expr": "emqx_ds_buffer_flush_time",
+          "expr": "emqx_ds_buffer_flush_time{db=\"$db\", interval=\"current\"}",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{shard}}",
           "range": true,
-          "refId": "A"
+          "refId": "A",
+          "useBackend": false
         }
       ],
       "title": "Buffer flush time",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "Contribution to end-to-end latency that comes from the write buffer.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 10
+      },
+      "id": 15,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "emqx_ds_buffer_latency{db=\"$db\", interval=\"current\"}",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "instant": false,
+          "legendFormat": "{{shard}}",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "title": "Write-induced latency",
       "type": "timeseries"
     },
     {
@@ -441,7 +530,7 @@
         "h": 10,
         "w": 8,
         "x": 0,
-        "y": 21
+        "y": 20
       },
       "id": 2,
       "options": {
@@ -462,16 +551,20 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "editorMode": "code",
+          "disableTextWrap": false,
+          "editorMode": "builder",
           "exemplar": true,
-          "expr": "rate(emqx_ds_buffer_batches{}[$__rate_interval])",
+          "expr": "rate(emqx_ds_buffer_batches{db=\"$db\"}[$__rate_interval])",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{shard}}",
           "range": true,
-          "refId": "A"
+          "refId": "A",
+          "useBackend": false
         }
       ],
-      "title": "Egress n batches",
+      "title": "Batches/s",
       "type": "timeseries"
     },
     {
@@ -506,7 +599,7 @@
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "auto",
+            "showPoints": "never",
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -535,11 +628,11 @@
       },
       "gridPos": {
         "h": 10,
-        "w": 16,
+        "w": 7,
         "x": 8,
-        "y": 21
+        "y": 20
       },
-      "id": 4,
+      "id": 17,
       "options": {
         "legend": {
           "calcs": [],
@@ -558,44 +651,1005 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "editorMode": "code",
+          "disableTextWrap": false,
+          "editorMode": "builder",
           "exemplar": true,
-          "expr": "rate(emqx_ds_buffer_messages{}[$__rate_interval]) / rate(emqx_ds_buffer_batches{}[$__rate_interval])",
+          "expr": "rate(emqx_ds_buffer_messages{db=\"$db\"}[$__rate_interval])",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{shard}}",
           "range": true,
-          "refId": "A"
+          "refId": "A",
+          "useBackend": false
         }
       ],
-      "title": "Avg batch messages",
+      "title": "Transactions/s",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "Total volume of data written to the database that includes all shards.\nThis is a lower estimate that doesn't include message metadata.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "Bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 9,
+        "x": 15,
+        "y": 20
+      },
+      "id": 16,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "exemplar": true,
+          "expr": "sum by(instance) (rate(emqx_ds_buffer_bytes{db=\"$db\"}[$__rate_interval]))",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "interval": "",
+          "legendFormat": "{{instance}}",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "title": "Total data written (decimal)",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 30
+      },
+      "id": 27,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 31
+          },
+          "id": 28,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "rate(emqx_ds_subs_stuck_total{db=\"$db\"}[$__rate_interval])",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "stuck-{{db}}",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "editorMode": "builder",
+              "expr": "rate(emqx_ds_subs_unstuck_total{db=\"$db\"}[$__rate_interval])",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "unstuck-{{db}}",
+              "range": true,
+              "refId": "B"
+            }
+          ],
+          "title": "Stuck/unstuck stream subscriptions",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "µs"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 31
+          },
+          "id": 29,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "emqx_ds_subs_fanout_time{interval=\"current\", db=\"$db\"}",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
+            }
+          ],
+          "title": "Fanout time",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 39
+          },
+          "id": 30,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "emqx_ds_subs_request_sharing{interval=\"current\", type=\"rt\", db=\"$db\"}",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "{{shard}}",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
+            }
+          ],
+          "title": "Request sharing (realtime)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 39
+          },
+          "id": 31,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "emqx_ds_subs_request_sharing{interval=\"current\", type=\"catchup\", db=\"$db\"}",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "{{shard}}",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
+            }
+          ],
+          "title": "Request sharing (catchup)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "µs"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 47
+          },
+          "id": 32,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "emqx_ds_subs_fulfill_time{interval=\"current\", type=\"rt\", db=\"$db\"}",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "{{shard}}",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
+            }
+          ],
+          "title": "Fulfill time (realtime)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "µs"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 47
+          },
+          "id": 34,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "emqx_ds_subs_fulfill_time{interval=\"current\", type=\"catchup\", db=\"$db\"}",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "{{shard}}",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
+            }
+          ],
+          "title": "Fulfill time (catchup)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 55
+          },
+          "id": 33,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "rate(emqx_ds_subs_beams_sent_total{type=\"rt\", db=\"$db\"}[$__rate_interval])",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "{{shard}}",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
+            }
+          ],
+          "title": "Beams/s (realtime)",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 55
+          },
+          "id": 35,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
+              },
+              "disableTextWrap": false,
+              "editorMode": "builder",
+              "expr": "rate(emqx_ds_subs_beams_sent_total{type=\"catchup\", db=\"$db\"}[$__rate_interval])",
+              "fullMetaSearch": false,
+              "includeNullMetadata": true,
+              "instant": false,
+              "legendFormat": "{{shard}}",
+              "range": true,
+              "refId": "A",
+              "useBackend": false
+            }
+          ],
+          "title": "Beams/s (realtime)",
+          "type": "timeseries"
+        }
+      ],
+      "title": "Beamformers",
+      "type": "row"
     }
   ],
-  "refresh": "auto",
+  "refresh": "",
   "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
+          "selected": true,
+          "text": "messages",
+          "value": "messages"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "PBFA97CFB590B2093"
         },
-        "definition": "emqx_ds_",
+        "definition": "label_values(db)",
         "hide": 0,
         "includeAll": false,
         "multi": false,
         "name": "db",
         "options": [],
         "query": {
-          "query": "emqx_ds_",
-          "refId": "StandardVariableQuery"
+          "qryType": 1,
+          "query": "label_values(db)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "emqx~127.0.0.1"
+          ],
+          "value": [
+            "emqx~127.0.0.1"
+          ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PBFA97CFB590B2093"
+        },
+        "definition": "label_values(instance)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "instance",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(instance)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
         "regex": "",
@@ -606,13 +1660,13 @@
     ]
   },
   "time": {
-    "from": "now-15m",
-    "to": "now"
+    "from": "2025-09-01T16:19:28.175Z",
+    "to": "2025-09-01T16:37:59.696Z"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Durable storage",
   "uid": "wRDWiWfSz",
-  "version": 2,
+  "version": 12,
   "weekStart": ""
 }
